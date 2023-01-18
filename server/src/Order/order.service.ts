@@ -58,10 +58,18 @@ export class OrderService{
     }
 
     async deleteorder(id:string){
-        const result=await this.orderModel.deleteOne({_id:id});
-        if(result.deletedCount===0){
-            throw new NotFoundException("Order Not Found!!");
+        let result;
+        try{
+            result=await this.orderModel.deleteOne({_id:id}).exec();
+            if(result.deletedCount===0){
+                throw new NotFoundException("Order Not Found!!");
+            }
+        }catch(error){
+            throw new NotFoundException("Invalid Order ID");
         }
+        
+        // console.log(result);
+        
         this.cacheManager.del('orders');
         this.cacheManager.del('order'+id);
         return null;

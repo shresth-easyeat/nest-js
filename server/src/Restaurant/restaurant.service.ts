@@ -20,7 +20,7 @@ export class restaurantService{
         this.cacheManager.del('restaurants');
         return result.id;
     }
-    
+
     async getAllrestaurants(){
         let restaurants=await this.cacheManager.get('restaurants');
         if(!restaurants){
@@ -60,7 +60,15 @@ export class restaurantService{
 
     async deleterestaurant(id:string){
         // const restaurant=await this.findrestaurant(id);
-        const result=await this.restaurantModel.deleteOne({_id:id}).exec();
+        let result;
+        try{
+            result=await this.restaurantModel.deleteOne({_id:id}).exec();
+            if(result.deletedCount===0){
+                throw new NotFoundException("Restaurant Not Found!!");
+            }
+        }catch(error){
+            throw new NotFoundException("Invalid Restaurant ID");
+        }
         this.cacheManager.del('restaurants');
         this.cacheManager.del('rest'+id);
         if(result.deletedCount===0){

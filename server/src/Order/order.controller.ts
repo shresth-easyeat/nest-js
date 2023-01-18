@@ -1,4 +1,5 @@
 import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from "@nestjs/common";
+import { CreateOrderDto } from "./order.model";
 import { OrderService } from "./order.service";
 
 @UseInterceptors(CacheInterceptor)
@@ -8,6 +9,7 @@ export class orderController{
 
     @Post("/add")
     async addorder(
+        @Body() createOrderDto: CreateOrderDto,
         @Body('customerName') name:string, 
         @Body('orders') orders:string[], 
         @Body('amount') amount:number

@@ -1,4 +1,5 @@
 import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from "@nestjs/common";
+import { CreateRestaurantDto } from "./restaurant.model";
 import { restaurantService } from "./restaurant.service";
 
 @UseInterceptors(CacheInterceptor)
@@ -8,6 +9,7 @@ export class restaurantController{
 
     @Post("/add")
     async addrestaurant(
+        @Body() createRestaurantDto: CreateRestaurantDto,
         @Body('name') name:string, 
         @Body('description') desc:string, 
         @Body('rating') rate:number

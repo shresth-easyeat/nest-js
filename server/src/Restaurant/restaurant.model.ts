@@ -1,3 +1,4 @@
+import { IsEmail, IsNotEmpty, IsNumber } from 'class-validator';
 import * as mongoose from 'mongoose';
 
 export const restaurantSchema= new mongoose.Schema({
@@ -12,4 +13,15 @@ export interface Restaurant extends mongoose.Document{
     name: string;
     description: string;
     rating: number;
+}
+
+export class CreateRestaurantDto {
+    @IsNumber()
+    rating:number;
+  
+    @IsNotEmpty()
+    name: string;
+
+    @IsNotEmpty()
+    description:string;
 }
