@@ -1,27 +1,26 @@
-import { IsEmail, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 import * as mongoose from 'mongoose';
 
-export const restaurantSchema= new mongoose.Schema({
-    name: {type:String,required:true},
-    description: {type:String,required:true},
-    rating: {type:Number,required:true}
-})
+export const restaurantSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  rating: { type: Number, required: true },
+});
 
-
-export interface Restaurant extends mongoose.Document{
-    id: string;
-    name: string;
-    description: string;
-    rating: number;
+export interface Restaurant extends mongoose.Document {
+  id: string;
+  name: string;
+  description: string;
+  rating: number;
 }
 
 export class CreateRestaurantDto {
-    @IsNumber()
-    rating:number;
-  
-    @IsNotEmpty()
-    name: string;
+  @IsNumber()
+  rating: number;
 
-    @IsNotEmpty()
-    description:string;
+  @IsNotEmpty()
+  name: string;
+
+  @IsNotEmpty()
+  description: string;
 }
