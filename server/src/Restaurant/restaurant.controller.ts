@@ -24,8 +24,7 @@ export class restaurantController{
     }
 
     @Get(':restaurantID')
-    @CacheKey("rest")
-    @CacheTTL(60)
+    @CacheTTL(600)
     getrestaurant(@Param("restaurantID") id:string){
         return this.restaurantService.getrestaurant(id);
     }

@@ -20,6 +20,7 @@ export class restaurantService{
         this.cacheManager.del('restaurants');
         return result.id;
     }
+    
     async getAllrestaurants(){
         let restaurants=await this.cacheManager.get('restaurants');
         if(!restaurants){
@@ -29,6 +30,7 @@ export class restaurantService{
         }
         return restaurants;
     }
+
     async getrestaurant(id:string){
         const key="rest"+id;
         let restaurant=await this.cacheManager.get(key);

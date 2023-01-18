@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, CacheInterceptor, CacheKey, CacheTTL, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from "@nestjs/common";
 import { OrderService } from "./order.service";
 
+@UseInterceptors(CacheInterceptor)
 @Controller("order")
 export class orderController{
     constructor(private readonly orderService: OrderService){}
@@ -16,12 +17,15 @@ export class orderController{
     }
 
     @Get()
+    @CacheKey('orders')
+    @CacheTTL(600)
     async getorders(){
         const result= await this.orderService.getAllorders();
         return result;
     }
 
     @Get(':orderID')
+    @CacheTTL(600)
     async getorder(@Param("orderID") id:string){
         const result= await this.orderService.getorder(id);
         return result;
